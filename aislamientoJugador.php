@@ -107,7 +107,6 @@ include_once './modelos/Persona.php';
 header('Location: registro.php?aislamiento='.$aislamiento.' & bloqueo='.$bloqueo.'');
  // echo "<a href='registro.php,php?aislamiento=$aislamiento & bloqueo=$bloqueo'></a>";
         
-        
 }
 
 

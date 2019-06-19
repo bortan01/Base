@@ -57,7 +57,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Opciones:</h6>
-            <a class="collapse-item" href="registro.php">Registro Jugador</a>
+            <a class="collapse-item" href="aislamientoJugador.php">Registro Jugador</a>
             <a class="collapse-item" href="registro_Equipo.php">Registro Equipo</a>
             <a class="collapse-item" href="aislamiento.php">seleccione aislamiento</a>
             

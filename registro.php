@@ -122,7 +122,8 @@ if (isset($_REQUEST["pass"])
 include_once './modelos/Persona.php';
  include_once './repositorios/repositorio_persona.php';
  $persona = new Persona();
-
+ $aislamiento=$_GET['aislamiento'];
+ $bloqueo=$_GET['bloqueo'];
  $persona->setDui($_POST['dui']);
  $persona->setNombre($_POST['nombre']);
  $persona->setApellido($_POST['apellido']);
@@ -132,7 +133,7 @@ include_once './modelos/Persona.php';
    $conn=new conexion();
    $conn->conectar() ;
 
-   repositorio_persona::registrar($conn->conectar(), $persona);
+   repositorio_persona::registrar($conn->conectar(), $persona, $aislamiento, $bloqueo);
    //repositorio_persona::insertar($conn->conectar(), $persona);
 
     

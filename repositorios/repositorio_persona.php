@@ -1,6 +1,6 @@
 <?php
 class Repositorio_persona{
-	public static function insertar($conexion, $persona){
+	public static function insertar($conexion, $persona, $aislamiento, $bloqueo){
 		$persona_insertada =  false;
 
 		if (isset($conexion)){
@@ -39,8 +39,27 @@ class Repositorio_persona{
 	}
 
 
-	public static function registrar($conexion, $persona){
+	public static function registrar($conexion, $persona, $aislamiento, $bloqueo){
 		$persona_insertada =  false;
+		switch ($aislamiento) {
+		    case 1:
+		        $aislamiento="SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;";
+		        break;
+		    case 2:
+		        $aislamiento="SET TRANSACTION ISOLATION LEVEL READ COMMITTED;";
+		        break;
+		    case 3:
+		        $aislamiento="";
+		        break;
+		}
+		switch ($bloqueo) {
+		    case 'e':
+		        $bloqueo="LOCK TABLE PERSONAS IN EXCLUSIVE MODE;";
+		        break;
+		    case "c":
+		        $bloqueo="SET TRANSACTION ISOLATION LEVEL READ ONLY";
+		        break;		    
+		}
 
 		$dui = $persona->getDui();
 				$nombre = $persona->getNombre();
@@ -54,10 +73,19 @@ class Repositorio_persona{
 		$sql = "INSERT INTO personas(dui,nombre) "."VALUES('".$dui."','".$nombre."')"	;	
 		
 		$registrar = oci_parse($conexion, $sql);
-		oci_execute($registrar);
+		if(!oci_execute($registrar, OCI_DEFAULT)) {    
+         // Si tenemos un problema, retrocede, muere
+			echo '<script>alert("No se completo el registro", "", "warning");</script>';
+         oci_rollback ($conexion);         
+     	}else{
+     		oci_commit($conexion);
+     	}
+		
+		
 	}
 }
 
 
 
 ?>
+
