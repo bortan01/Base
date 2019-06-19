@@ -59,6 +59,7 @@
             <h6 class="collapse-header">Opciones:</h6>
             <a class="collapse-item" href="registro.php">Registro Jugador</a>
             <a class="collapse-item" href="registro_Equipo.php">Registro Equipo</a>
+            <a class="collapse-item" href="aislamiento.php.php">seleccione aislamiento</a>
             
            
           </div>

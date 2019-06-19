@@ -32,57 +32,34 @@
           <div class="col-lg-7">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Registro Jugador!</h1>
+                <h1 class="h4 text-gray-900 mb-4">Selecione tipo de aislamiento!</h1>
               </div>
               <form class="user" method="post">
-                 <input type="hidden" name="pass" id="pass" >
+                 <input type="hidden"  name="pass" id="pass" >
                 <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="nombre" name="nombre" placeholder="Nombre">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="apellido" name="apellido" placeholder="Apellido">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-user" id="direccion" name="direccion" placeholder="Direccion">
-                </div>
-                <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="dui" name="dui" placeholder="DUI">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="telefono" name="telefono" placeholder="Telefono">
-                  </div>
-                </div>
-                 <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="procedencia" name="procedencia" placeholder="Procedencia">
-                  </div>
+                  <div class="col-sm-3 mb-3 mb-sm-0">
+                      <input type="radio" class="form-control form-control-user" name="seria" value="1">Serializable<br>
+                   </div>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-user" id="altura" name="altura" placeholder="Altura">
+                      <input type="radio" class="form-control form-control-user" name="read_committed" value="2">Read committed<br>
                   </div>
-                   <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-user" id="peso" name="peso" placeholder="Peso">
+                    <div class="col-sm-3">
+                      <input type="radio" class="form-control form-control-user" name="read_omly" value="3">Read Only<br>
                   </div>
                 </div>
                  <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="posicion" name="posicion" placeholder="Posicion">
-                  </div>
                   <div class="col-sm-6">
-                      <select class="form-control form-control-user" name="equipo" id="equipo">
-                          <!--cargar los equipos desde la base--> 
-                          <option value="saab">Saab</option>
-                          <option value="mercedes">Mercedes</option>
-                          <option value="audi">Audi</option>
+                      <select class="form-control" name="bloqueo" id="bloqueo">
+                          <!--cargar los equipos desde la base-->
+                          <option value="exclusivo">Exclusivo</option>
+                          <option value="compartido">Compartido</option>
                       </select>
                   </div>
                   
                 </div>
                  
                 <a type="" href="" class="btn btn-primary btn-user btn-block">
-                  <button type="submit">Guardar</button>
+                  <button type="submit">Ok</button>
                   
                 </a>
                 <hr>
