@@ -2,7 +2,7 @@
 <meta charset = "utf8" />
 <?php  
 // crear conexion con oracle
-$conexion = oci_connect("FERRETERIA", "FERRETERIA", "localhost/xe"); 
+/*$conexion = oci_connect("FERRETERIA", "FERRETERIA", "localhost/xe"); 
  
 if (!$conexion) {    
   $m = oci_error();    
@@ -10,5 +10,6 @@ if (!$conexion) {
   exit; 
 } else {    
   echo "Conexión con éxito a Oracle!"; } 
- 
+ */
+  phpinfo();
 ?>

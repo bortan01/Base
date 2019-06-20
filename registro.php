@@ -81,9 +81,8 @@
                   
                 </div>
                  
-                <a type="" href="" class="btn btn-primary btn-user btn-block">
-                  <button type="submit">Guardar</button>
-                  
+                <a type="" href="javascript:document.forms[0].submit()" class="btn btn-primary btn-user btn-block">
+                  Guardar                  
                 </a>
                 <hr>
                 <a href="index.php" class="btn btn-google btn-user btn-block">

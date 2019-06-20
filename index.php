@@ -60,6 +60,7 @@
             <a class="collapse-item" href="aislamientoJugador.php">Registro Jugador</a>
             <a class="collapse-item" href="registro_Equipo.php">Registro Equipo</a>
             <a class="collapse-item" href="aislamiento.php">seleccione aislamiento</a>
+            <a class="collapse-item" href="consulta.php?sql= & resul=resultado">Consulta Libre</a>
             
            
           </div>
