@@ -105,6 +105,54 @@ public class JugadorBean implements Serializable {
         return "index?faces-redirect=true";
     }
 
+    //para el modificar porque con tu insertar no me funciona
+    //el modificar
+     public String insertarJ() {
+        boolean ban = false;
+        try {
+            // if (this.d.getNombre().equals("jose")) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, msj);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            String clientId = null;
+            
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
+            Jugador jugador= new Jugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui());
+            //this.desactivarcampos();
+            if (estado.equals("insertar")) {
+                estado = "insertar";
+                ban = c.InsertarJugador(jugador, getSessioneshibernate());
+                limpiar();
+                if (ban) {
+                  
+                     setMsj("Sea Guardado con exito");
+                  
+                } else {
+                   
+                     setMsj("No se a podido Guardar");
+                }
+            } else {
+               
+                ban = c.ModificarDepto(j.getCodigo(),j.getNombre(), getSessioneshibernate());
+                limpiar();
+                this.sessioneshibernate = null;
+                estado = "insertar";
+                if (ban) {
+                   
+                    setMsj("Exito");
+                } else {
+                   
+                    setMsj("No se puedo");
+                }
+            }
+            //fc.addMessage(null, new FacesMessage(msj));
+            UIViewRoot uiViewRoot = fc.getViewRoot();
+            fc.addMessage(clientId, msg);
+
+        } catch (Exception e) {
+        }
+        return "index?faces-redirect=true";
+    }
+     //fi modificar
     public String limpiar() {
         try {
             j.setCodigo(null);
@@ -135,7 +183,7 @@ public class JugadorBean implements Serializable {
 
    
 
-    public void eliminarDepto(BigDecimal id) {
+    public void eliminarJugador(BigDecimal id) {
         boolean ban = false;
         try {
 
@@ -155,7 +203,7 @@ public class JugadorBean implements Serializable {
         }
     }
 
-    public void Pre_Modificar(BigDecimal id) {
+    public void JugadorModificar(BigDecimal id) {
         try {
 
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -165,13 +213,13 @@ public class JugadorBean implements Serializable {
  
             Jugador jugador = new Jugador();
 
-            jugador = c.BuscaModificarJugador(id, getSessioneshibernate());
+            jugador = c.BuscaModificarJugador(id, getSessioneshibernate());///para bloquearlo
             j.setCodigo(jugador.getCodigo());
             j.setNombre(jugador.getNombre());
             
             estado = "Modificar";
 
-            msj = "Iniciado el Transaccion de modificar";
+            msj = "  ";
 
             fc.renderResponse();
         } catch (Exception e) {

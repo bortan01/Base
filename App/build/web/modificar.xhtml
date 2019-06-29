@@ -10,7 +10,6 @@
            
         </style>
     </h:head>
-    #{jugadorBean.iniciarProceso()}
     <h:body >
         <h:form id="form" >
            
@@ -21,12 +20,7 @@
                 <h:inputText value="#{jugadorBean.j.codigo}" id="codigo" /><br/>
                 <h:outputLabel value="Nombre:"/>
                 <h:inputText value="#{jugadorBean.j.nombre}" id="nom" /><br/>
-                
-
-                    
-                         
-                    </h:commandButton>
-                    <h:commandButton value="Guardar" action="#{jugadorBean.insertarE()}"  >
+                <h:commandButton value="Guardar" action="#{jugadorBean.insertarJ()}"  >
                         <f:ajax render="codigo nom msg" execute="@form"/>  
                     </h:commandButton>
                     <h:commandButton value="Cancelar" action="#{jugadorBean.limpiar()}" >
@@ -47,7 +41,35 @@
 
         </h:form>
 
-      
+        <h:form>
+            <h:dataTable value="#{jugadorBean.llenartabla()}" var="item" border="1" cellpadding="2" cellspacing="0"  rules="all"  id="tabla" >
+                <h:column >
+                    <f:facet name="header" >
+                        <h:outputText value="Codigo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigo}"/>
+                </h:column>
+                <h:column >
+                    <f:facet name="header" >
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <div class="col-lg-12" align="center">
+                            <h:outputText value="Acciones"/>
+                        </div> 
+                    </f:facet>
+
+                    <div class="col-lg-12" align="center">
+                        <h:commandLink value="Modificar" action="#{jugadorBean.JugadorModificar(item.codigo)}"></h:commandLink>
+                        
+                    </div>
+                </h:column>
+            </h:dataTable>
+
+        </h:form>
     </h:body>
 </html>
 
