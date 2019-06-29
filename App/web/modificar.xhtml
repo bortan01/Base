@@ -20,12 +20,15 @@
                 <h:inputText value="#{jugadorBean.j.codigo}" id="codigo" /><br/>
                 <h:outputLabel value="Nombre:"/>
                 <h:inputText value="#{jugadorBean.j.nombre}" id="nom" /><br/>
+                <h:outputLabel value="Apellido:"/>
+                <h:inputText value="#{jugadorBean.j.apellido}" id="ape" /><br/>
+                <h:outputLabel value="Dui:"/>
+                <h:inputText value="#{jugadorBean.j.dui}" id="dui" /><br/>
+                <br/>
                 <h:commandButton value="Guardar" action="#{jugadorBean.insertarJ()}"  >
-                        <f:ajax render="codigo nom msg" execute="@form"/>  
+                        <f:ajax render="codigo nom ape dui msg" execute="@form"/>  
                     </h:commandButton>
-                    <h:commandButton value="Cancelar" action="#{jugadorBean.limpiar()}" >
-                        <f:ajax render="codigo nom msg tabla" execute="@form"/>
-                    </h:commandButton>
+                   <h:link outcome="index" value="Regresar" /><br/>
                     
                     <br/><br/>
                
@@ -54,6 +57,18 @@
                         <h:outputText value="Nombre"/>
                     </f:facet>
                     <h:outputText value="#{item.nombre}"/>
+                </h:column>
+                  <h:column >
+                    <f:facet name="header" >
+                        <h:outputText value="Apellido"/>
+                    </f:facet>
+                      <h:outputText value="#{item.apellido}"/>
+                </h:column>
+                <h:column >
+                    <f:facet name="header" >
+                        <h:outputText value="Dui"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dui}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">

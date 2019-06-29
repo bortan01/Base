@@ -62,14 +62,14 @@ public class JugadorBean implements Serializable {
         boolean ban = false;
         try {
             iniciarProceso();
-            // if (this.d.getNombre().equals("jose")) {
+       
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, msj);
             FacesContext fc = FacesContext.getCurrentInstance();
             String clientId = null;
             
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             Jugador jugador= new Jugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui());
-            //this.desactivarcampos();
+       
             if (estado.equals("insertar")) {
                 estado = "insertar";
                 ban = c.InsertarJugador(jugador, getSessioneshibernate());
@@ -84,7 +84,7 @@ public class JugadorBean implements Serializable {
                 }
             } else {
                
-                ban = c.ModificarDepto(j.getCodigo(),j.getNombre(), getSessioneshibernate());
+                ban = c.ModificarJugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui(), getSessioneshibernate());
                 limpiar();
                 this.sessioneshibernate = null;
                 estado = "insertar";
@@ -110,14 +110,14 @@ public class JugadorBean implements Serializable {
      public String insertarJ() {
         boolean ban = false;
         try {
-            // if (this.d.getNombre().equals("jose")) {
+           
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, msj);
             FacesContext fc = FacesContext.getCurrentInstance();
             String clientId = null;
             
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             Jugador jugador= new Jugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui());
-            //this.desactivarcampos();
+           
             if (estado.equals("insertar")) {
                 estado = "insertar";
                 ban = c.InsertarJugador(jugador, getSessioneshibernate());
@@ -132,7 +132,7 @@ public class JugadorBean implements Serializable {
                 }
             } else {
                
-                ban = c.ModificarDepto(j.getCodigo(),j.getNombre(), getSessioneshibernate());
+                ban = c.ModificarJugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui(), getSessioneshibernate());
                 limpiar();
                 this.sessioneshibernate = null;
                 estado = "insertar";
@@ -216,6 +216,8 @@ public class JugadorBean implements Serializable {
             jugador = c.BuscaModificarJugador(id, getSessioneshibernate());///para bloquearlo
             j.setCodigo(jugador.getCodigo());
             j.setNombre(jugador.getNombre());
+            j.setApellido(jugador.getApellido());
+            j.setDui(jugador.getDui());
             
             estado = "Modificar";
 

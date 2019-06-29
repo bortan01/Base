@@ -99,35 +99,7 @@ public class Controlador {
         return lista1;
     }
 
-    public List<Jugador> MostrarDatosSesion(Session sesion) {
-        List<Jugador> lista1 = new ArrayList<Jugador>();
-        boolean b = false;
-        try {
-
-            if (sesion == null) {
-                session = HibernateUtil.getSessionFactory().openSession();
-                session.beginTransaction();
-                b = true;
-            } else {
-                session = sesion;
-            }
-            Query q = session.createQuery("from Jugador ORDER BY CODIGO");
-            lista1 = (List<Jugador>) q.list();
-            session.getTransaction().commit();
-
-        } catch (RuntimeException e) {
-//            if (trns != null) {
-                session.getTransaction().rollback();
-//            }
-            e.printStackTrace();
-        } finally {
-
-            session.clear();
-            session.close();
-
-        }
-        return lista1;
-    }
+ 
 
     public Jugador BuscaModificarJugador(BigDecimal id, Session sesion) {
 
@@ -154,12 +126,14 @@ public class Controlador {
         return jugador;
     }
 
-    public boolean ModificarDepto(BigDecimal id, String nombre, Session sesion) {
+    public boolean ModificarJugador(BigDecimal id, String nombre,String ape,String dui, Session sesion) {
         boolean ban = true;
         session = sesion;
         try {
             jugador.setCodigo(id);
             jugador.setNombre(nombre);
+            jugador.setApellido(ape);
+            jugador.setDui(dui);
             session.update(jugador);
             session.getTransaction().commit();
             sesion.get(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo
