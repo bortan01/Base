@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Jugadores</title>
+
+        <style>
+           
+        </style>
+    </h:head>
+    #{jugadorBean.iniciarProceso()}
+    <h:body >
+        <h:form id="form" >
+           
+                <f:facet name="header">
+                    <h:outputText value="Control de Departamentos"/>
+                </f:facet>
+                <h:outputLabel value="Codigo:"/>
+                <h:inputText value="#{jugadorBean.j.codigo}" id="codigo" /><br/>
+                <h:outputLabel value="Nombre:"/>
+                <h:inputText value="#{jugadorBean.j.nombre}" id="nom" /><br/>
+                
+
+                    
+                         
+                    <h:commandButton value="Guardar" action="#{jugadorBean.insertarE()}"  >
+                        <f:ajax render="codigo nom msg" execute="@form"/>  
+                    </h:commandButton>
+                    <h:commandButton value="Cancelar" action="#{jugadorBean.limpiar()}" >
+                        <f:ajax render="codigo nom msg tabla" execute="@form"/>
+                    </h:commandButton>
+                    
+                    <br/><br/>
+               
+
+           
+            <div style="text-align:left; margin-left: 0%;">
+                <br/>
+               
+                <h:outputLabel value="#{jugadorBean.msj}" id="msg" styleClass="msg" rendered="#{not empty jugadorBean.msj}"/> 
+                <h:inputHidden value="#{jugadorBean.estado}" id="estado" /> 
+                 
+            </div>
+
+        </h:form>
+
+      
+    </h:body>
+</html>
+
