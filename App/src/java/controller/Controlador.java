@@ -101,16 +101,29 @@ public class Controlador {
 
  
 
-    public Jugador BuscaModificarJugador(BigDecimal id, Session sesion) {
+    public Jugador BloquearJugador(BigDecimal id, Session sesion1, int tipo) {
 
-        session = sesion;
+        session = sesion1;
         try {
-            jugador = (Jugador) session.get(Jugador.class, id, LockMode.UPGRADE_NOWAIT);  //Solo permite aun usuario vizualizar las datos
+            if(tipo == 0){
+            jugador = (Jugador) session.get(Jugador.class, id, LockMode.NONE);  //Solo permite aun usuario vizualizar las datos 
+            }
+            if(tipo == 1){
+            jugador = (Jugador) session.get(Jugador.class, id, LockMode.PESSIMISTIC_READ);  //Solo permite aun usuario vizualizar las datos 
+            }
+            if(tipo == 2){
+            jugador = (Jugador) session.get(Jugador.class, id, LockMode.PESSIMISTIC_WRITE);  //Solo permite aun usuario vizualizar las datos 
+            }
+            if(tipo == 3){
+            jugador = (Jugador) session.get(Jugador.class, id, LockMode.PESSIMISTIC_FORCE_INCREMENT);  //Solo permite aun usuario vizualizar las datos 
+            }
+            //jugador = (Jugador) session.get(Jugador.class, id, LockMode.UPGRADE_NOWAIT);  //Solo permite aun usuario vizualizar las datos
  
         } catch (HibernateException ex) {
 
-            ex.printStackTrace();
-             session.getTransaction().rollback();
+           // ex.printStackTrace();
+             //session.getTransaction().rollback();
+           session.clear();
 
         } finally {
             session.clear();
@@ -126,22 +139,23 @@ public class Controlador {
             jugador.setCodigo(id);
             jugador.setNombre(nombre);
             jugador.setApellido(ape);
-            jugador.setDui(dui);      
+            jugador.setDui(dui); 
+            
             session.update(jugador); 
             session.getTransaction().commit();
-            //sesion.load(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
+            //sesion.get(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
          
             
             ban = true;
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             //mess = ex.getMessage();
             session.getTransaction().rollback();
             ex.printStackTrace();
             ban = false;
         } finally {
             session.clear();
-//            session.close();
+           session.close();
         }
         return ban;
 

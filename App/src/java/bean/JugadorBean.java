@@ -198,7 +198,7 @@ public class JugadorBean implements Serializable {
         }
     }
 
-    public void JugadorModificar(BigDecimal id) {
+    public void JugadorModificar(BigDecimal id , int tipo) {
         try {
 
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -206,8 +206,20 @@ public class JugadorBean implements Serializable {
             setSessioneshibernate(c.IniciarTrasaccion());
  
             Jugador jugador = new Jugador();
-
-            jugador = c.BuscaModificarJugador(id, getSessioneshibernate());///para bloquearlo
+            if(tipo == 0){
+             jugador = c.BloquearJugador(id, getSessioneshibernate(),tipo);///para bloquearlo   
+            }
+            if(tipo == 1){
+             jugador = c.BloquearJugador(id, getSessioneshibernate(),tipo);///para bloquearlo   
+            }
+            if(tipo == 2){
+             jugador = c.BloquearJugador(id, getSessioneshibernate(),tipo);///para bloquearlo   
+            }
+            if(tipo == 3){
+             jugador = c.BloquearJugador(id, getSessioneshibernate(),tipo);///para bloquearlo   
+            }
+            
+           // jugador = c.BloquearJugador(id, getSessioneshibernate());///para bloquearlo
             j.setCodigo(jugador.getCodigo());
             j.setNombre(jugador.getNombre());
             j.setApellido(jugador.getApellido());
