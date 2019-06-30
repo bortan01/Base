@@ -110,6 +110,7 @@ public class Controlador {
         } catch (HibernateException ex) {
 
             ex.printStackTrace();
+             session.getTransaction().rollback();
 
         } finally {
             session.clear();
@@ -125,11 +126,11 @@ public class Controlador {
             jugador.setCodigo(id);
             jugador.setNombre(nombre);
             jugador.setApellido(ape);
-            jugador.setDui(dui);
+            jugador.setDui(dui);      
             session.update(jugador); 
             session.getTransaction().commit();
-            sesion.load(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
-          
+            //sesion.load(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
+         
             
             ban = true;
 
