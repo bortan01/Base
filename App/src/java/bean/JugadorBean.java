@@ -188,7 +188,7 @@ public class JugadorBean implements Serializable {
           
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             setSessioneshibernate(c.IniciarTrasaccion());
-            ban = c.EliminarDepto(id, getSessioneshibernate());
+            ban = c.EliminarJugador(id, getSessioneshibernate());
             if (ban) {
                 msj = "Sea Eliminado con Exito";
             } else {

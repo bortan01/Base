@@ -161,13 +161,13 @@ public class Controlador {
 
     }
 
-    public boolean EliminarDepto(BigDecimal id, Session sesion) {
+    public boolean EliminarJugador(BigDecimal id, Session sesion) {
         boolean ban = true;
         
         session = sesion;
         try {
             session.get(Jugador.class, id, LockMode.PESSIMISTIC_WRITE);  //Solo permite aun usuario vizualizar las datos
-            Query query = session.createQuery("delete Jugador where IDDEPARTAMENTO='" + id + "'");
+            Query query = session.createQuery("delete Jugador where CODIGO='" + id + "'");
             query.executeUpdate();
 
             //tx.commit();
