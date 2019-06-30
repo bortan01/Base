@@ -112,9 +112,7 @@ public class JugadorBean implements Serializable {
         try {
            
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, msj);
-            FacesContext fc = FacesContext.getCurrentInstance();
-            String clientId = null;
-            
+            FacesContext fc = FacesContext.getCurrentInstance();  
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             Jugador jugador= new Jugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui());
            
@@ -144,9 +142,9 @@ public class JugadorBean implements Serializable {
                     setMsj("No se puedo");
                 }
             }
-            //fc.addMessage(null, new FacesMessage(msj));
+          
             UIViewRoot uiViewRoot = fc.getViewRoot();
-            fc.addMessage(clientId, msg);
+         
 
         } catch (Exception e) {
         }
@@ -160,8 +158,6 @@ public class JugadorBean implements Serializable {
             setMsj("");
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msj, msj);
             FacesContext fc = FacesContext.getCurrentInstance();
-            String clientId = null;
-            fc.addMessage(clientId, msg);
 
         } catch (Exception e) {
         }
@@ -189,7 +185,7 @@ public class JugadorBean implements Serializable {
 
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msj, msj);
             FacesContext fc = FacesContext.getCurrentInstance();
-            String clientId = null;
+          
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             setSessioneshibernate(c.IniciarTrasaccion());
             ban = c.EliminarDepto(id, getSessioneshibernate());
@@ -198,7 +194,6 @@ public class JugadorBean implements Serializable {
             } else {
                 msj = "No se a podido Eliminar";
             }
-            fc.addMessage(clientId, msg);
         } catch (Exception e) {
         }
     }
@@ -207,7 +202,6 @@ public class JugadorBean implements Serializable {
         try {
 
             FacesContext fc = FacesContext.getCurrentInstance();
-            String clientId = null;
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             setSessioneshibernate(c.IniciarTrasaccion());
  

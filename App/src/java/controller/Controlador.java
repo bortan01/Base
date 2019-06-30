@@ -103,18 +103,10 @@ public class Controlador {
 
     public Jugador BuscaModificarJugador(BigDecimal id, Session sesion) {
 
-        List<Jugador> lista2 = new ArrayList<Jugador>();
         session = sesion;
         try {
-
-            //deptos = (Jugador) session.get(Jugador.class, id);
-            //deptos = (Jugador) session.get(Jugador.class, id,LockMode.READ);  //serializable solo uno podia modifar y el otro bloqueado
             jugador = (Jugador) session.get(Jugador.class, id, LockMode.UPGRADE_NOWAIT);  //Solo permite aun usuario vizualizar las datos
-            //System.out.print(deptos);
-
-//deptos = (Jugador) session.get(Jugador.class, id,LockMode.UPGRADE_SKIPLOCKED); // Los bloque la fila y queda en espera.
-            // deptos = (Jugador) session.load(Jugador.class, id,LockMode.WRITE);
-
+ 
         } catch (HibernateException ex) {
 
             ex.printStackTrace();
@@ -134,9 +126,11 @@ public class Controlador {
             jugador.setNombre(nombre);
             jugador.setApellido(ape);
             jugador.setDui(dui);
-            session.update(jugador);
+            session.update(jugador); 
             session.getTransaction().commit();
-            sesion.get(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo
+            sesion.load(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
+          
+            
             ban = true;
 
         } catch (HibernateException ex) {
