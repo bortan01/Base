@@ -4,31 +4,37 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Jugadores</title>
-
+        <h:outputStylesheet library="css" name="table-style.css"  />
+        <title>Modificar Jugadores</title>
+ 
         <style>
-           
+          
         </style>
     </h:head>
     <h:body >
+       
+        <div align="center" class="form-style-6 ">
         <h:form id="form" >
            
                 <f:facet name="header">
                     <h:outputText value="Jugador"/>
                 </f:facet>
-                <h:outputLabel value="Codigo:"/>
+                <h:outputLabel value="Codigo:     "/> &nbsp; &nbsp;
                 <h:inputText value="#{jugadorBean.j.codigo}" id="codigo" /><br/>
-                <h:outputLabel value="Nombre:"/>
+                <h:outputLabel value="Nombre:    "/>&nbsp;&nbsp;
                 <h:inputText value="#{jugadorBean.j.nombre}" id="nom" /><br/>
-                <h:outputLabel value="Apellido:"/>
+                <h:outputLabel value="Apellido:   "/>&nbsp;
                 <h:inputText value="#{jugadorBean.j.apellido}" id="ape" /><br/>
-                <h:outputLabel value="Dui:"/>
+                <h:outputLabel value="Dui:                   "/>&nbsp;&nbsp;
                 <h:inputText value="#{jugadorBean.j.dui}" id="dui" /><br/>
                 <br/>
                 <h:commandButton value="Guardar" action="#{jugadorBean.insertarJ()}"  >
                         <f:ajax render="codigo nom ape dui msg" execute="@form"/>  
                     </h:commandButton>
-                   <h:link outcome="index" value="Regresar" /><br/>
+                
+                   <h:commandButton value="Cancelar" action="#{jugadorBean.limpiar()}" >
+                        <f:ajax render="codigo nom msg tabla" execute="@form"/>
+                    </h:commandButton>
                     
                     <br/><br/>
                
@@ -36,17 +42,22 @@
            
             <div style="text-align:left; margin-left: 0%;">
                 <br/>
-               
+              
                 <h:outputLabel value="#{jugadorBean.msj}" id="msg" styleClass="msg" rendered="#{not empty jugadorBean.msj}"/> 
                 <h:inputHidden value="#{jugadorBean.estado}" id="estado" /> 
                  
             </div>
 
         </h:form>
-
+            </div>
+        <div align="center" style="background: mintcream" >
         <h:form>
-            <h:dataTable value="#{jugadorBean.llenartabla()}" var="item" border="1" cellpadding="2" cellspacing="0"  rules="all"  id="tabla" >
-                <h:column >
+            <div class="container">
+            <h:dataTable value="#{jugadorBean.llenartabla()}" var="item" border="1" cellpadding="2" cellspacing="0"  rules="all"  
+                         styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
+                <h:column id="th" >
                     <f:facet name="header" >
                         <h:outputText value="Codigo"/>
                     </f:facet>
@@ -81,19 +92,28 @@
                         <h:commandLink value="Modificar sin bloqueo" action="#{jugadorBean.JugadorModificar(item.codigo,0)}"></h:commandLink>                        
                     </div>
                     <div class="col-lg-12" align="center">
-                        <h:commandLink value="Modificar PESSIMISTIC_READ" action="#{jugadorBean.JugadorModificar(item.codigo,1)}"></h:commandLink>                        
+                        <h:commandLink value="PESSIMISTIC_READ" action="#{jugadorBean.JugadorModificar(item.codigo,1)}"></h:commandLink>                        
                     </div>
                     <div class="col-lg-12" align="center">
-                        <h:commandLink value="Modificar PESSIMISTIC_WRITE" action="#{jugadorBean.JugadorModificar(item.codigo,2)}"></h:commandLink>                        
+                        <h:commandLink value="PESSIMISTIC_WRITE" action="#{jugadorBean.JugadorModificar(item.codigo,2)}"></h:commandLink>                        
                     </div>
                     <div class="col-lg-12" align="center">
-                        <h:commandLink value="Modificar PESSIMISTIC_FORCE_INCREMENT" action="#{jugadorBean.JugadorModificar(item.codigo,3)}"></h:commandLink>                        
+                        <h:commandLink value="UPGRADE_NOWAIT" action="#{jugadorBean.JugadorModificar(item.codigo,3)}"></h:commandLink>                        
                     </div>
                     
                 </h:column>
+                <h:column>
+                    <f:facet name="header" >
+                        <h:outputText value="Eliminar"/>
+                    </f:facet>
+                    <div class="col-lg-12" align="center">
+                        <h:commandLink value="Eliminar" action="#{jugadorBean.eliminarJugador(item.codigo)}"></h:commandLink>                        
+                    </div>
+                </h:column>
             </h:dataTable>
-
+</div>
         </h:form>
+            </div>
     </h:body>
 </html>
 

@@ -31,7 +31,7 @@ public class Controlador {
     boolean ban = false;
 
     public List<Jugador> lista = new ArrayList<Jugador>();
-    public Jugador jugador = new Jugador();
+    public Jugador jugador = new Jugador(null);
 
     public static Session IniciarTrasaccion() {
         try {
@@ -102,8 +102,12 @@ public class Controlador {
  
 
     public Jugador BloquearJugador(BigDecimal id, Session sesion1, int tipo) {
-
+           int p=0;
         session = sesion1;
+        session.getCurrentLockMode((Jugador) session.get(Jugador.class, id));
+     
+           
+       
         try {
             if(tipo == 0){
             jugador = (Jugador) session.get(Jugador.class, id, LockMode.NONE);  //Solo permite aun usuario vizualizar las datos 
@@ -115,21 +119,23 @@ public class Controlador {
             jugador = (Jugador) session.get(Jugador.class, id, LockMode.PESSIMISTIC_WRITE);  //Solo permite aun usuario vizualizar las datos 
             }
             if(tipo == 3){
-            jugador = (Jugador) session.get(Jugador.class, id, LockMode.PESSIMISTIC_FORCE_INCREMENT);  //Solo permite aun usuario vizualizar las datos 
+            jugador = (Jugador) session.get(Jugador.class, id, LockMode.UPGRADE_NOWAIT);  //Solo permite aun usuario vizualizar las datos 
             }
             //jugador = (Jugador) session.get(Jugador.class, id, LockMode.UPGRADE_NOWAIT);  //Solo permite aun usuario vizualizar las datos
  
         } catch (HibernateException ex) {
-
-           // ex.printStackTrace();
-             //session.getTransaction().rollback();
+          
+           session.getTransaction().rollback();
            session.clear();
-
+           session.close();
+           p=1;
         } finally {
+            if(p==0)
             session.clear();
             //session.close();
         }
-        return jugador;
+        return jugador;        
+        
     }
 
     public boolean ModificarJugador(BigDecimal id, String nombre,String ape,String dui, Session sesion) {
@@ -139,19 +145,16 @@ public class Controlador {
             jugador.setCodigo(id);
             jugador.setNombre(nombre);
             jugador.setApellido(ape);
-            jugador.setDui(dui); 
-            
+            jugador.setDui(dui);             
             session.update(jugador); 
             session.getTransaction().commit();
             //sesion.get(Jugador.class, id, LockMode.NONE);//eliminar el bloqueo me daba problemas
-         
-            
             ban = true;
 
         } catch (Exception ex) {
             //mess = ex.getMessage();
-            session.getTransaction().rollback();
-            ex.printStackTrace();
+            //session.getTransaction().rollback();
+            //ex.printStackTrace();
             ban = false;
         } finally {
             session.clear();

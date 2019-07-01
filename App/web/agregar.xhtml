@@ -5,26 +5,31 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Jugadores</title>
-
+  <h:outputStylesheet library="css" name="table-style.css"  />
         <style>
            
         </style>
     </h:head>
     #{jugadorBean.iniciarProceso()}
     <h:body >
+        <div align="center" class="form-style-6 ">
         <h:form id="form" >
            
                 <f:facet name="header">
                     <h:outputText value="Jugadores"/>
                 </f:facet>
-                <h:outputLabel value="Codigo:"/>
+                <h:outputLabel value="Codigo:     "/> &nbsp; &nbsp;
                 <h:inputText value="#{jugadorBean.j.codigo}" id="codigo" /><br/>
-                <h:outputLabel value="Nombre:"/>
+                <h:outputLabel value="Nombre:    "/>&nbsp;
                 <h:inputText value="#{jugadorBean.j.nombre}" id="nom" /><br/>
+                <h:outputLabel value="Apellido:   "/>&nbsp;
+                <h:inputText value="#{jugadorBean.j.apellido}" id="ape" /><br/>
+                <h:outputLabel value="Dui:                "/>&nbsp;
+                <h:inputText styleClass="aqua" value="#{jugadorBean.j.dui}" id="dui" /><br/>
                 
 
                     
-                         
+                <br></br>   
                     <h:commandButton value="Guardar" action="#{jugadorBean.insertarE()}"  >
                         <f:ajax render="codigo nom msg" execute="@form"/>  
                     </h:commandButton>
@@ -45,7 +50,7 @@
             </div>
 
         </h:form>
-
+</div>
       
     </h:body>
 </html>

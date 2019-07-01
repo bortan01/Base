@@ -35,7 +35,15 @@ public class JugadorBean implements Serializable {
     private Controlador c = new Controlador();
     private String msj = "";
     private static Session sessioneshibernate = null;
-   
+   FacesContext fc;
+
+    public FacesContext getFc() {
+        return fc;
+    }
+
+    public void setFc(FacesContext fc) {
+        this.fc = fc;
+    }
     private String estado = "insertar";
    
 
@@ -86,7 +94,7 @@ public class JugadorBean implements Serializable {
                
                 ban = c.ModificarJugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui(), getSessioneshibernate());
                 limpiar();
-                this.sessioneshibernate = null;
+                //this.sessioneshibernate = null;
                 estado = "insertar";
                 if (ban) {
                    
@@ -112,13 +120,13 @@ public class JugadorBean implements Serializable {
         try {
            
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, msj, msj);
-            FacesContext fc = FacesContext.getCurrentInstance();  
-            HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
+            //FacesContext fc = FacesContext.getCurrentInstance();  
+           // HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             Jugador jugador= new Jugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui());
            
             if (estado.equals("insertar")) {
                 estado = "insertar";
-                ban = c.InsertarJugador(jugador, getSessioneshibernate());
+               /* ban = c.InsertarJugador(jugador, getSessioneshibernate());
                 limpiar();
                 if (ban) {
                   
@@ -127,19 +135,19 @@ public class JugadorBean implements Serializable {
                 } else {
                    
                      setMsj("No se a podido Guardar");
-                }
+                }*/
             } else {
                
                 ban = c.ModificarJugador(j.getCodigo(),j.getNombre(),j.getApellido(),j.getDui(), getSessioneshibernate());
                 limpiar();
-                this.sessioneshibernate = null;
+                //this.sessioneshibernate = null;
                 estado = "insertar";
                 if (ban) {
                    
                     setMsj("Exito");
                 } else {
                    
-                    setMsj("No se puedo");
+                    setMsj("No se pudo");
                 }
             }
           
@@ -147,8 +155,11 @@ public class JugadorBean implements Serializable {
          
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            return "index?faces-redirect=true";
         }
-        return "index?faces-redirect=true";
+        
     }
      //fi modificar
     public String limpiar() {
@@ -160,6 +171,7 @@ public class JugadorBean implements Serializable {
             FacesContext fc = FacesContext.getCurrentInstance();
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return "index?faces-redirect=true";
     }
@@ -201,7 +213,7 @@ public class JugadorBean implements Serializable {
     public void JugadorModificar(BigDecimal id , int tipo) {
         try {
 
-            FacesContext fc = FacesContext.getCurrentInstance();
+            fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             setSessioneshibernate(c.IniciarTrasaccion());
  
@@ -220,17 +232,26 @@ public class JugadorBean implements Serializable {
             }
             
            // jugador = c.BloquearJugador(id, getSessioneshibernate());///para bloquearlo
-            j.setCodigo(jugador.getCodigo());
+            
+            if(!jugador.getCodigo().equals(null)){
+                j.setCodigo(jugador.getCodigo());
             j.setNombre(jugador.getNombre());
             j.setApellido(jugador.getApellido());
             j.setDui(jugador.getDui());
+                estado = "Modificar";
+                 msj = "  ";
+            }else{
+                estado = "insertar";
+                 msj = " bloqueado por otra transaccion ";
+            }
             
-            estado = "Modificar";
 
-            msj = "  ";
+           
 
             fc.renderResponse();
         } catch (Exception e) {
+            estado = "insertar";
+            e.printStackTrace();
         }
         
     }
